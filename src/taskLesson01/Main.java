@@ -22,7 +22,7 @@ public class Main {
             fruits[fruits.length - i - 1] = fruits[i];
             fruits[i] = fr;
         }
-        ;
+
         System.out.println("После замены элементов: " + fruits[0].getClass() + "\n" + fruits[1].getClass());
         System.out.println();
 

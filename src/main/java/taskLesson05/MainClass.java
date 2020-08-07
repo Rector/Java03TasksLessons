@@ -11,10 +11,9 @@ public class MainClass {
 //    Можете корректировать классы (в т.ч. конструктор машин) и добавлять объекты классов из пакета util.concurrent.
 
     public static final int CARS_COUNT = 4;
-    public final static int LAST_STAGE = 40;
+    public static final int LAST_STAGE = 40;
     static CountDownLatch readinessInRace = new CountDownLatch(CARS_COUNT);
     static CountDownLatch endRace = new CountDownLatch(CARS_COUNT);
-
 
 
     public static void main(String[] args) {

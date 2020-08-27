@@ -6,9 +6,31 @@ import taskLesson01.fruit.Orange;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public class Main {
+
+    public static void swap1(Fruit[] fruits) {
+        Fruit fr;
+        for (int i = 0; i < fruits.length / 2; i++) {
+            fr = fruits[fruits.length - i - 1];
+            fruits[fruits.length - i - 1] = fruits[i];
+            fruits[i] = fr;
+        }
+    }
+
+// 2 вариант решения
+    public static void swap2(Object[] arr, int x1, int x2) {
+        Object temp = arr[x1];
+        arr[x1] = arr[x2];
+        arr[x2] = temp;
+    }
+
+
+    public static <T> ArrayList<T> convertArray(T[] arr) {
+        return new ArrayList<T>(Arrays.asList(arr));
+    }
+
+
     public static void main(String[] args) {
 
 // 1. Написать метод, который меняет два элемента массива местами.(массив может быть любого ссылочного типа);
@@ -16,22 +38,15 @@ public class Main {
         Fruit[] fruits = {new Apple(), new Orange()};
         System.out.println("До замены элементов массива: " + fruits[0].getClass() + "\n" + fruits[1].getClass());
 
-        Fruit fr;
-        for (int i = 0; i < fruits.length / 2; i++) {
-            fr = fruits[fruits.length - i - 1];
-            fruits[fruits.length - i - 1] = fruits[i];
-            fruits[i] = fr;
-        }
+        swap1(fruits);
 
         System.out.println("После замены элементов: " + fruits[0].getClass() + "\n" + fruits[1].getClass());
         System.out.println();
 
 // 2. Написать метод, который преобразует массив в ArrayList;
 
-        List<Fruit> listFruits = new ArrayList<>(Arrays.asList(fruits));
-        for (Fruit f : listFruits) {
-            System.out.println(f.getClass());
-        }
+        System.out.println(convertArray(fruits));
+
 
 // 3. Большая задача:
 //a. Есть классы Fruit -> Apple, Orange;(больше фруктов не надо)
@@ -53,7 +68,6 @@ public class Main {
         Orange orange = new Orange();
         Box<Apple> boxWithApples = new Box<Apple>(apple, apple, apple, apple);
         Box<Orange> boxWithOranges = new Box<Orange>(orange, orange);
-
         System.out.println(boxWithApples.getWeight());
         System.out.println(boxWithOranges.getWeight());
 

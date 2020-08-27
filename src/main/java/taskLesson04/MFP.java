@@ -9,7 +9,7 @@ public class MFP extends Thread {
 
     public void print(String nameUser) throws InterruptedException {
         synchronized (OBJ) {
-            if (lockPrint == true && lockXerocopy == true) {
+            if (lockPrint && lockXerocopy) {
                 lockPrint = false;
                 lockXerocopy = false;
                 System.out.println("print start " + nameUser);
@@ -23,7 +23,7 @@ public class MFP extends Thread {
 
     public void copy(String nameUser) throws InterruptedException {
         synchronized (OBJ) {
-            if (lockCopy == true && lockXerocopy == true) {
+            if (lockCopy && lockXerocopy) {
                 lockCopy = false;
                 lockXerocopy = false;
                 System.out.println("scanning start " + nameUser);
@@ -38,7 +38,7 @@ public class MFP extends Thread {
 
     public void xerocopy(String nameUser) throws InterruptedException {
         synchronized (OBJ) {
-            if (lockXerocopy == true && lockCopy == true) {
+            if (lockXerocopy && lockCopy) {
                 lockXerocopy = false;
                 lockCopy = false;
                 System.out.println("xerox start " + nameUser);

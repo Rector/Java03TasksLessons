@@ -1,6 +1,7 @@
 package taskLesson05;
 
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.CyclicBarrier;
 
 public class MainClass {
 //    1. Организуем гонки:
@@ -11,37 +12,23 @@ public class MainClass {
 //    Можете корректировать классы (в т.ч. конструктор машин) и добавлять объекты классов из пакета util.concurrent.
 
     public static final int CARS_COUNT = 4;
-    public static final int LAST_STAGE = 40;
-    static CountDownLatch readinessInRace = new CountDownLatch(CARS_COUNT);
-    static CountDownLatch endRace = new CountDownLatch(CARS_COUNT);
-
-
     public static void main(String[] args) {
         System.out.println("ВАЖНОЕ ОБЪЯВЛЕНИЕ >>> Подготовка!!!");
-        Race race = new Race(new Road(60), new Tunnel(80, 2), new Road(LAST_STAGE));
+        CyclicBarrier barrier = new CyclicBarrier(CARS_COUNT + 1);
+        Race race = new Race(new Road(60), new Tunnel(40, 2), new Road(40));
         Car[] cars = new Car[CARS_COUNT];
         for (int i = 0; i < cars.length; i++) {
-            cars[i] = new Car(race, 20 + (int) (Math.random() * 10));
-        }
-        for (int i = 0; i < cars.length; i++) {
+            cars[i] = new Car(race, 20 + (int) (Math.random() * 10), barrier);
             new Thread(cars[i]).start();
         }
-
-
         try {
-            readinessInRace.await();
+            barrier.await();
             System.out.println("ВАЖНОЕ ОБЪЯВЛЕНИЕ >>> Гонка началась!!!");
-        } catch (InterruptedException e) {
+            barrier.await();
+            barrier.await();
+        } catch (Exception e) {
             e.printStackTrace();
         }
-
-
-        try {
-            endRace.await();
-            System.out.println("ВАЖНОЕ ОБЪЯВЛЕНИЕ >>> Гонка закончилась!!!");
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
+        System.out.println("ВАЖНОЕ ОБЪЯВЛЕНИЕ >>> Гонка закончилась!!!");
     }
 }

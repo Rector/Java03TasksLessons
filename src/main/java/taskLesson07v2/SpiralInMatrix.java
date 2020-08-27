@@ -1,87 +1,54 @@
 package taskLesson07v2;
 
+import java.util.Scanner;
+
 public class SpiralInMatrix {
-    private static final int WIDTH = 4;
-    private static final int HEIGHT = 4;
-
-    private static int[][] matrix = new int[HEIGHT][WIDTH];
-    private static int counter = 1;
-
-    private static void fillMatrix() {
-        for (int i = 0; i < matrix.length; i++) {
-            for (int j = 0; j < matrix[i].length; j++) {
-                matrix[i][j] = 0;
-            }
-        }
-    }
-
-
-    private static void printMatrix() {
-        for (int i = 0; i < matrix.length; i++) {
-            System.out.println();
-            for (int j = 0; j < matrix[i].length; j++) {
-                System.out.printf("%-5d", matrix[i][j]);
-            }
-        }
-    }
-
-
-    private static void fillHorizontalInMatrix(int[][] arr, int y) {
-        for (int x = 0; x < WIDTH; x++) {
-            if (arr[y][x] == 0) {
-                arr[y][x] = counter;
-                counter++;
-            }
-        }
-    }
-
-
-    private static void fillVerticalInMatrix(int[][] arr, int x) {
-        for (int y = 0; y < HEIGHT; y++) {
-            if (arr[y][x] == 0) {
-                arr[y][x] = counter;
-                counter++;
-            }
-        }
-    }
-
-
-    private static void fillReverseHorizontalInMatrix(int[][] arr, int y) {
-        for (int x = WIDTH - 1; x >= 0; x--) {
-            if (arr[y][x] == 0) {
-                arr[y][x] = counter;
-                counter++;
-            }
-        }
-    }
-
-
-    private static void fillReverseVerticalInMatrix(int[][] arr, int x) {
-        for (int y = HEIGHT - 1; y >=0; y--) {
-            if (arr[y][x] == 0) {
-                arr[y][x] = counter;
-                counter++;
-            }
-        }
-    }
-
     public static void main(String[] args) {
-        fillMatrix();
-        printMatrix();
-        System.out.println();
+        int k = 1;
+        int direction = 0;
+        int iteration = 0;
 
-        fillHorizontalInMatrix(matrix, 0);
-        fillVerticalInMatrix(matrix, WIDTH - 1);
+        Scanner scanner = new Scanner(System.in);
+
+        int SIZE_X = scanner.nextInt();
+        int SIZE_Y = scanner.nextInt();
+
+        int arr[][] = new int[SIZE_Y][SIZE_X];
 
 
-        fillReverseHorizontalInMatrix(matrix, HEIGHT - 1);
-        fillReverseVerticalInMatrix(matrix, 0);
+        for (int n = 0; k <= SIZE_X * SIZE_Y; n++) {
+            direction = n % 4;
+            iteration = n / 4;
+            switch (direction) {
+                case 0:
+                    for (int j = iteration; j < SIZE_X - iteration; j++, k++) {
+                        arr[iteration][j] = k;
+                    }
+                    break;
+                case 1:
+                    for (int i = iteration + 1; i < SIZE_Y - iteration; i++, k++) {
+                        arr[i][SIZE_X - iteration - 1] = k;
+                    }
+                    break;
+                case 2:
+                    for (int j = SIZE_X - iteration - 2; j >= iteration; j--, k++) {
+                        arr[SIZE_Y - iteration - 1][j] = k;
+                    }
+                    break;
+                case 3:
+                    for (int i = SIZE_Y - iteration - 2; i > iteration; i--, k++) {
+                        arr[i][iteration] = k;
+                    }
+                    break;
+            }
+        }
 
-        fillHorizontalInMatrix(matrix, 1);
-        fillVerticalInMatrix(matrix, 2);
-
-        fillReverseHorizontalInMatrix(matrix, 2);
-        printMatrix();
-
+        for (int i = 0; i < SIZE_Y; i++) {
+            for (int j = 0; j < SIZE_X; j++) {
+                if (arr[i][j] < 10) System.out.print(" ");
+                System.out.printf("%-5d\t", arr[i][j]);
+            }
+            System.out.println();
+        }
     }
 }

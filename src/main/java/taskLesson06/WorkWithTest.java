@@ -12,7 +12,7 @@ public class WorkWithTest {
             }
         }
 
-        if (check == false) {
+        if (!check) {
             throw new RuntimeException("В массиве отсутствует цифра 4");
         }
 
